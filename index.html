@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FECOR - Paneles Estadísticos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fondo tecnológico -->
+    <div class="tech-bg">
+        <div class="tech-circle"></div>
+        <div class="tech-circle"></div>
+        <div class="tech-circle"></div>
+        <div class="tech-circle"></div>
+    </div>
+
+    <!-- Navegación superior -->
+    <nav class="top-nav">
+        <div class="nav-content"  >
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="carga.html" class="nav-item">Carga Procesal</a>
+            <a href="plazos.html" class="nav-item">Plazos</a>
+            <a href="operativos.html" class="nav-item">Operativos</a>
+            <a href="sentencias.html" class="nav-item">Sentencias</a>
+        </div>
+    </nav>
+
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1 class="main-title">PANELES ESTADÍSTICOS</h1>
+                <p class="main-subtitle">Sistema Interactivo de Análisis de Datos</p>
+                <p class="organization-name">Fiscalía Superior Nacional Coordinadora - FECOR</p>
+            </div>
+            <div class="header-circles">
+                <div class="tech-preview-circle">
+                    <span class="circle-icon">💻</span>
+                </div>
+                <div class="tech-preview-circle">
+                    <span class="circle-icon">📊</span>
+                </div>
+                <div class="tech-preview-circle">
+                    <span class="circle-icon">📈</span>
+                </div>
+                <div class="tech-preview-circle">
+                    <span class="circle-icon">🔍</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sección de Bienvenida -->
+    <section class="welcome-section">
+        <div class="logo-container">
+            <div class="logo"><img src="escudo1.png"  width="220" height="120"></div>
+            
+            <!-- <div class="ministry-text">MINISTERIO PÚBLICO</div>
+            <div class="republic-text">REPÚBLICA DEL PERÚ</div> -->
+        </div>
+        <div class="welcome-content">
+            <h2 class="welcome-title">¡Bienvenido a los Paneles Interactivos de FECOR!</h2>
+            <p class="welcome-description">
+                Los paneles interactivos (dashboards) ofrecen una forma dinámica e intuitiva de visualizar y analizar información clave. Estos paneles contienen datos estadísticos extraídos y exportados desde el Sistema de Gestión Fiscal (SGF),
+                además la interactividad de estos paneles ofrece la capacidad de personalizar vistas, aplicar filtros, y profundizar en la información según las necesidades específicas, potenciando así el análisis estratégico y operativo dentro de la organización.
+            </p>
+        </div>
+    </section>
+
+    <!-- Paneles Principales -->
+    <section class="panels-grid">
+        <div class="panel-card" onclick="window.open('#panel-carga-procesal')">
+            <div class="panel-icon">📋</div>
+            <h3 class="panel-title">Carga Procesal</h3>
+            <p class="panel-description">Análisis detallado de la carga procesal por fiscalías, tipos de casos y períodos.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-plazos')">
+            <div class="panel-icon">⏱️</div>
+            <h3 class="panel-title">Control de Plazos</h3>
+            <p class="panel-description">Monitoreo de plazos procesales, vencimientos y alertas tempranas del sistema.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-operativos')">
+            <div class="panel-icon">🚁</div>
+            <h3 class="panel-title">Operativos</h3>
+            <p class="panel-description">Seguimiento y resultados de operativos contra la criminalidad organizada a nivel nacional.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-sentencias')">
+            <div class="panel-icon">⚖️</div>
+            <h3 class="panel-title">Sentencias</h3>
+            <p class="panel-description">Estadísticas de sentencias emitidas, tipos de condenas y efectividad judicial.</p>
+        </div>
+
+        <!-- <div class="panel-card" onclick="window.open('#panel-geografico', '_blank')">
+            <div class="panel-icon">🗺️</div>
+            <h3 class="panel-title">Análisis Geográfico</h3>
+            <p class="panel-description">Visualización georreferenciada de casos y incidencias por regiones del país.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-tendencias', '_blank')">
+            <div class="panel-icon">📈</div>
+            <h3 class="panel-title">Tendencias</h3>
+            <p class="panel-description">Análisis predictivo y tendencias estadísticas de la criminalidad organizada.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-recursos', '_blank')">
+            <div class="panel-icon">💼</div>
+            <h3 class="panel-title">Recursos Humanos</h3>
+            <p class="panel-description">Distribución de personal, cargas de trabajo y eficiencia organizacional.</p>
+        </div>
+
+        <div class="panel-card" onclick="window.open('#panel-comparativo', '_blank')">
+            <div class="panel-icon">📊</div>
+            <h3 class="panel-title">Análisis Comparativo</h3>
+            <p class="panel-description">Comparaciones inter-institucionales y benchmarking de resultados procesales.</p>
+        </div> -->
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
