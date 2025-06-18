@@ -1,0 +1,556 @@
+<!-- CARGADOR UNIFICADO FECOR - TODOS LOS ARCHIVOS DESDE GITHUB -->
+<div id="fecor-system-container">
+    <div class="unified-loader">
+        <div class="loader-icon">⚖️</div>
+        <div class="loader-text">Cargando Sistema FECOR</div>
+        <div class="loader-progress">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="loader-status">Inicializando...</div>
+    </div>
+</div>
+
+<script>
+class UnifiedFecorLoader {
+    constructor() {
+        this.GITHUB_USER = 'informaticafecor';
+        this.REPO_NAME = 'paneles';
+        this.BRANCH = 'main';
+        this.baseUrl = `https://raw.githubusercontent.com/informaticafecor/paneles/refs/heads/main`;
+        
+        this.files = {
+            // Archivos HTML
+            html: {
+                index: 'index.html',
+                carga: 'carga.html',
+                operativos: 'operativos.html',
+                plazos: 'plazos.html',
+                sentencias: 'sentencias.html'
+            },
+            // Archivos CSS y JS
+            styles: 'styles.css',
+            scripts: 'script.js',
+            // Archivos de imagen/recursos (si los necesitas)
+            images: [
+                'cal.png',
+                'escudo.png',
+                'escudo1.png',
+                'estadistica1.png',
+                'estadistica2.png',
+                'justicia.png',
+                'lupa.png'
+            ]
+        };
+        
+        this.loadedContent = {};
+        this.currentPage = 'index';
+        this.totalFiles = 0;
+        this.loadedFiles = 0;
+    }
+
+    // Inicializar el sistema
+    async init() {
+        console.log('🚀 Iniciando Sistema FECOR Unificado...');
+        
+        try {
+            this.updateStatus('Calculando archivos...');
+            this.calculateTotalFiles();
+            
+            this.updateStatus('Descargando archivos principales...');
+            await this.loadEssentialFiles();
+            
+            this.updateStatus('Configurando sistema...');
+            await this.setupSystem();
+            
+            this.updateStatus('Cargando recursos adicionales...');
+            await this.loadAdditionalResources();
+            
+            this.updateStatus('Finalizando configuración...');
+            this.finalizeSetup();
+            
+            console.log('✅ Sistema FECOR cargado completamente');
+            
+        } catch (error) {
+            console.error('❌ Error al cargar sistema:', error);
+            this.showError(error);
+        }
+    }
+
+    // Calcular total de archivos
+    calculateTotalFiles() {
+        this.totalFiles = Object.keys(this.files.html).length + 2; // HTML + CSS + JS
+        console.log(`📊 Total de archivos a cargar: ${this.totalFiles}`);
+    }
+
+    // Cargar archivos esenciales (HTML, CSS, JS)
+    async loadEssentialFiles() {
+        const essentialUrls = {
+            // Archivos HTML
+            ...Object.fromEntries(
+                Object.entries(this.files.html).map(([key, file]) => 
+                    [key, `${this.baseUrl}/${file}`]
+                )
+            ),
+            // CSS y JS
+            styles: `${this.baseUrl}/${this.files.styles}`,
+            scripts: `${this.baseUrl}/${this.files.scripts}`
+        };
+
+        console.log('📥 Descargando archivos esenciales...');
+        
+        // Fetch paralelo de todos los archivos esenciales
+        const responses = await Promise.allSettled(
+            Object.entries(essentialUrls).map(async ([key, url]) => {
+                try {
+                    console.log(`⬇️ Descargando: ${key}`);
+                    const response = await fetch(url);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const content = await response.text();
+                    this.loadedContent[key] = content;
+                    this.updateProgress();
+                    
+                    console.log(`✅ ${key} descargado`);
+                    return { key, content };
+                    
+                } catch (error) {
+                    console.warn(`⚠️ Error descargando ${key}:`, error.message);
+                    this.updateProgress();
+                    return { key, error: error.message };
+                }
+            })
+        );
+
+        // Verificar resultados
+        const failed = responses.filter(result => 
+            result.status === 'rejected' || result.value?.error
+        );
+        
+        if (failed.length > 0) {
+            console.warn('⚠️ Algunos archivos no se pudieron cargar:', failed);
+        }
+        
+        console.log('✅ Archivos esenciales procesados');
+    }
+
+    // Configurar el sistema principal
+    async setupSystem() {
+        // Inyectar CSS
+        if (this.loadedContent.styles) {
+            this.injectCSS(this.loadedContent.styles);
+        }
+
+        // Inyectar HTML principal
+        if (this.loadedContent.index) {
+            this.injectMainHTML(this.loadedContent.index);
+        }
+
+        // Inyectar JavaScript
+        if (this.loadedContent.scripts) {
+            this.injectJS(this.loadedContent.scripts);
+        }
+
+        // Configurar navegación
+        setTimeout(() => this.setupNavigation(), 500);
+    }
+
+    // Cargar recursos adicionales (imágenes, etc.)
+    async loadAdditionalResources() {
+        // Opcional: cargar imágenes si las necesitas
+        for (const image of this.files.images) {
+            try {
+                const imageUrl = `${this.baseUrl}/${image}`;
+                // Precargar imagen para cache del navegador
+                const img = new Image();
+                img.src = imageUrl;
+                console.log(`🖼️ Imagen precargada: ${image}`);
+            } catch (error) {
+                console.warn(`⚠️ No se pudo precargar imagen ${image}:`, error);
+            }
+        }
+    }
+
+    // Inyectar CSS
+    injectCSS(cssContent) {
+        console.log('🎨 Inyectando CSS...');
+        
+        // Remover CSS previo
+        const oldStyles = document.querySelectorAll('style[data-fecor="unified"]');
+        oldStyles.forEach(style => style.remove());
+        
+        const styleElement = document.createElement('style');
+        styleElement.setAttribute('data-fecor', 'unified');
+        styleElement.textContent = cssContent;
+        document.head.appendChild(styleElement);
+    }
+
+    // Inyectar HTML principal
+    injectMainHTML(htmlContent) {
+        console.log('📄 Inyectando HTML principal...');
+        
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        
+        // Extraer contenido del body
+        let bodyContent = tempDiv.querySelector('body')?.innerHTML || htmlContent;
+        
+        // Limpiar referencias a archivos locales
+        bodyContent = this.cleanReferences(bodyContent);
+        
+        // Inyectar en el contenedor
+        const container = document.getElementById('fecor-system-container');
+        if (container) {
+            container.innerHTML = bodyContent;
+        }
+    }
+
+    // Inyectar JavaScript
+    injectJS(jsContent) {
+        console.log('⚙️ Inyectando JavaScript...');
+        
+        setTimeout(() => {
+            // Remover scripts previos
+            const oldScripts = document.querySelectorAll('script[data-fecor="unified"]');
+            oldScripts.forEach(script => script.remove());
+            
+            const scriptElement = document.createElement('script');
+            scriptElement.setAttribute('data-fecor', 'unified');
+            scriptElement.textContent = jsContent;
+            document.body.appendChild(scriptElement);
+        }, 200);
+    }
+
+    // Configurar navegación entre páginas
+    setupNavigation() {
+        console.log('🔗 Configurando navegación...');
+        
+        // Configurar enlaces de navegación
+        this.setupNavigationLinks();
+        
+        // Configurar menú desplegable
+        this.setupDropdownMenu();
+        
+        // Configurar paneles
+        this.setupPanelCards();
+        
+        console.log('✅ Navegación configurada');
+    }
+
+    setupNavigationLinks() {
+        const navItems = document.querySelectorAll('.nav-item:not(.dropdown-toggle)');
+        navItems.forEach(item => {
+            const href = item.getAttribute('href');
+            if (href && href.includes('.html')) {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageName = href.replace('.html', '');
+                    this.loadPage(pageName);
+                });
+            }
+        });
+    }
+
+    setupDropdownMenu() {
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            const href = item.getAttribute('href');
+            if (href && href.includes('.html')) {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageName = href.replace('.html', '');
+                    this.loadPage(pageName);
+                });
+            }
+        });
+    }
+
+    setupPanelCards() {
+        const panelCards = document.querySelectorAll('.panel-card');
+        panelCards.forEach(card => {
+            const onclick = card.getAttribute('onclick');
+            if (onclick && onclick.includes('.html')) {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const match = onclick.match(/(\w+)\.html/);
+                    if (match) {
+                        this.loadPage(match[1]);
+                    }
+                });
+                card.removeAttribute('onclick');
+            }
+        });
+    }
+
+    // Cargar página específica
+    loadPage(pageName) {
+        console.log(`🔄 Cargando página: ${pageName}`);
+        
+        if (this.loadedContent[pageName]) {
+            const cleanContent = this.cleanReferences(this.loadedContent[pageName]);
+            const container = document.getElementById('fecor-system-container');
+            
+            if (container) {
+                container.innerHTML = cleanContent;
+                this.currentPage = pageName;
+                
+                // Re-configurar navegación para la nueva página
+                setTimeout(() => this.setupNavigation(), 300);
+                
+                // Disparar evento
+                this.dispatchEvent('pageChanged', { page: pageName });
+                
+                console.log(`✅ Página ${pageName} cargada`);
+            }
+        } else {
+            this.showPageNotFound(pageName);
+        }
+    }
+
+    // Limpiar referencias a archivos locales
+    cleanReferences(content) {
+        return content
+            .replace(/src="script\.js"/g, '')
+            .replace(/href="styles\.css"/g, '')
+            .replace(/src="\.\/script\.js"/g, '')
+            .replace(/href="\.\/styles\.css"/g, '')
+            .replace(/src="images\//g, `src="${this.baseUrl}/`)
+            .replace(/href="images\//g, `href="${this.baseUrl}/`);
+    }
+
+    // Actualizar progreso
+    updateProgress() {
+        this.loadedFiles++;
+        const percentage = (this.loadedFiles / this.totalFiles) * 100;
+        
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            progressBar.style.width = `${percentage}%`;
+        }
+        
+        console.log(`📊 Progreso: ${this.loadedFiles}/${this.totalFiles} (${percentage.toFixed(1)}%)`);
+    }
+
+    // Actualizar estado
+    updateStatus(message) {
+        const statusElement = document.querySelector('.loader-status');
+        if (statusElement) {
+            statusElement.textContent = message;
+        }
+        console.log(`📋 Estado: ${message}`);
+    }
+
+    // Finalizar configuración
+    finalizeSetup() {
+        // Ocultar loader
+        const loader = document.querySelector('.unified-loader');
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+
+        // Disparar evento de sistema listo
+        this.dispatchEvent('fecorSystemReady', {
+            loadedFiles: Object.keys(this.loadedContent),
+            currentPage: this.currentPage
+        });
+    }
+
+    // Mostrar error
+    showError(error) {
+        const container = document.getElementById('fecor-system-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="error-display">
+                    <div class="error-icon">❌</div>
+                    <h2>Error al Cargar Sistema FECOR</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <div class="error-details">
+                        <h4>Archivos requeridos:</h4>
+                        <ul>
+                            ${Object.values(this.files.html).map(file => `<li>📄 ${file}</li>`).join('')}
+                            <li>🎨 ${this.files.styles}</li>
+                            <li>⚙️ ${this.files.scripts}</li>
+                        </ul>
+                    </div>
+                    <button onclick="fecorSystem.init()" class="retry-button">
+                        🔄 Reintentar
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Mostrar página no encontrada
+    showPageNotFound(pageName) {
+        const container = document.getElementById('fecor-system-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="not-found-display">
+                    <div class="not-found-icon">⚠️</div>
+                    <h2>Página No Encontrada</h2>
+                    <p>La página <strong>${pageName}</strong> no está disponible.</p>
+                    <button onclick="fecorSystem.loadPage('index')" class="home-button">
+                        🏠 Ir al Inicio
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Disparar eventos personalizados
+    dispatchEvent(eventName, detail) {
+        const event = new CustomEvent(eventName, { detail });
+        document.dispatchEvent(event);
+    }
+}
+
+// Crear instancia global
+const fecorSystem = new UnifiedFecorLoader();
+
+// Funciones globales
+window.fecorSystem = fecorSystem;
+window.loadFecorPage = (page) => fecorSystem.loadPage(page);
+window.reloadFecorSystem = () => fecorSystem.init();
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    fecorSystem.init();
+});
+
+document.addEventListener('fecorSystemReady', (e) => {
+    console.log('🎉 Sistema FECOR completamente listo:', e.detail);
+});
+
+document.addEventListener('pageChanged', (e) => {
+    console.log('📄 Página cambiada:', e.detail.page);
+});
+</script>
+
+<!-- Estilos para el loader unificado -->
+<style>
+#fecor-system-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a1929 0%, #1e3a8a 50%, #1e88e5 100%);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.unified-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: white;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.loader-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.loader-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #00bcd4;
+}
+
+.loader-progress {
+    width: 300px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00bcd4, #ffc107);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.loader-status {
+    font-size: 1rem;
+    opacity: 0.8;
+    animation: pulse 2s infinite;
+}
+
+.error-display, .not-found-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.error-icon, .not-found-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.error-display h2, .not-found-display h2 {
+    color: #ff6b6b;
+    margin-bottom: 20px;
+}
+
+.error-details {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.error-details ul {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+}
+
+.error-details li {
+    margin: 5px 0;
+}
+
+.retry-button, .home-button {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.retry-button:hover, .home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+</style>
