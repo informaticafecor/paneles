@@ -100,34 +100,34 @@ function smoothScroll(target) {
 }
 
 // Event listeners para navegación
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-       // e.preventDefault();
+// document.querySelectorAll('.nav-item').forEach(item => {
+//     item.addEventListener('click', function(e) {
+//        // e.preventDefault();
         
-        // Aquí puedes agregar lógica específica para cada enlace
-        const text = this.textContent.toLowerCase();
-        console.log(`Navegando a: ${text}`);
+//         // Aquí puedes agregar lógica específica para cada enlace
+//         const text = this.textContent.toLowerCase();
+//         console.log(`Navegando a: ${text}`);
         
-        // Ejemplo de redirección específica
-        switch(text) {
-            case 'inicio':
-                window.location.href = '#';
-                break;
-            case 'carga procesal':
-                window.location.href = '#panel-carga-procesal';
-                break;
-            case 'plazos':
-                window.location.href = '#panel-plazos';
-                break;
-            case 'operativos':
-                window.location.href = '#panel-operativos';
-                break;
-            case 'sentencias':
-                window.location.href = '#panel-sentencias';
-                break;
-        }
-    });
-});
+//         // Ejemplo de redirección específica
+//         switch(text) {
+//             case 'inicio':
+//                 window.location.href = '#';
+//                 break;
+//             case 'carga procesal':
+//                 window.location.href = '#panel-carga-procesal';
+//                 break;
+//             case 'plazos':
+//                 window.location.href = '#panel-plazos';
+//                 break;
+//             case 'operativos':
+//                 window.location.href = '#panel-operativos';
+//                 break;
+//             case 'sentencias':
+//                 window.location.href = '#panel-sentencias';
+//                 break;
+//         }
+//     });
+// });
 
 // Efectos adicionales para los paneles
 document.querySelectorAll('.panel-card').forEach(panel => {
