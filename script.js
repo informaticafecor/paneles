@@ -86,11 +86,11 @@ function typeWriter(element, text, speed = 100) {
 }
 
 // Aplicar efecto de tipeo al cargar la página
-// window.addEventListener('load', () => {
-//     const title = document.querySelector('.main-title');
-//     const originalText = title.textContent;
-//     typeWriter(title, originalText, 80);
-// });
+window.addEventListener('load', () => {
+    const title = document.querySelector('.main-title');
+    const originalText = title.textContent;
+    typeWriter(title, originalText, 80);
+});
 
 // Función para navegación suave
 function smoothScroll(target) {
