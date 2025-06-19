@@ -138,12 +138,12 @@ document.querySelectorAll('.panel-card').forEach(panel => {
     });
     
     // Efecto de click con feedback visual
-    panel.addEventListener('click', function() {
-        this.style.transform = 'scale(0.98)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 150);
-    });
+    // panel.addEventListener('click', function() {
+    //     this.style.transform = 'scale(0.98)';
+    //     setTimeout(() => {
+    //         this.style.transform = '';
+    //     }, 150);
+    // });
 });
 
 // Contador animado para estadísticas (ejemplo)
