@@ -318,8 +318,10 @@ class UnifiedFecorLoader {
     cleanReferences(content) {
         return content
             .replace(/src="script\.js"/g, '')
+            .replace(/src="menumovil\.js"/g, '')
             .replace(/href="styles\.css"/g, '')
             .replace(/src="\.\/script\.js"/g, '')
+            .replace(/src="\.\/menumovil\.js"/g, '')
             .replace(/href="\.\/styles\.css"/g, '')
             .replace(/src="images\//g, `src="${this.baseUrl}/`)
             .replace(/href="images\//g, `href="${this.baseUrl}/`);
