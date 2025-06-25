@@ -16,16 +16,39 @@
     </div>
 
     <!-- Navegación superior -->
-    <nav class="top-nav">
-        <div class="nav-content"  >
-            <a href="index.html" class="nav-item">Inicio</a>
-            <a href="carga.html" class="nav-item">Carga Procesal</a>
-            <a href="plazos.html" class="nav-item">Plazos</a>
-            <a href="operativos.html" class="nav-item">Operativos</a>
-            <a href="sentencias.html" class="nav-item">Sentencias</a>
-        </div>
-    </nav>
-
+      <nav class="top-nav">
+                <div class="nav-content">
+                    <!-- Logo/Título FECOR (visible en móvil) -->
+                    <div class="nav-logo">FECOR</div>
+                    
+                    <!-- Hamburger Menu Button (solo visible en móvil) -->
+                    <button class="hamburger-btn" id="hamburger-btn" aria-label="Menú">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    
+                    <!-- Navegación Desktop (se oculta en móvil) -->
+                    <div class="nav-items">
+                        <a href="index.html" class="nav-item">Inicio</a>
+                        
+                        <!-- Menú desplegable para Carga Procesal -->
+                        <div class="dropdown">
+                            <a href="" class="nav-item">Carga Procesal</a>
+                            <div class="dropdown-content">
+                                <a href="carga.html">Carga Supraprovincial</a>
+                                <a href="cargaprov.html">Carga Provincial</a>
+                                <a href="cargapool.html">Carga del Pool</a>
+                            </div>
+                        </div>
+                        
+                        <a href="plazos.html" class="nav-item">Plazos</a>
+                        <a href="operativos.html" class="nav-item">Operativos</a>
+                        <a href="sentencias.html" class="nav-item">Sentencias</a>
+                        
+                    </div>
+                </div>
+            </nav>
     <!-- Header Principal -->
     <header class="main-header">
         <div class="header-content">
@@ -50,6 +73,60 @@
             </div>
         </div>
     </header>
+<!-- ===== ELEMENTOS MÓVILES QUE FALTABAN ===== -->
+    
+    <!-- Sidebar Overlay (fondo oscuro cuando está abierto) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Sidebar Navigation (menú lateral móvil) -->
+    <nav class="sidebar-nav" id="sidebar-nav">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Menú FECOR</div>
+            <button class="close-sidebar" id="close-sidebar" aria-label="Cerrar menú">✕</button>
+        </div>
+        <div class="sidebar-content">
+            <a href="index.html" class="sidebar-nav-item">
+                <span class="sidebar-icon">🏠</span>
+                <span>Inicio</span>
+            </a>
+            
+            <!-- Sidebar Dropdown para Carga Procesal -->
+            <div class="sidebar-dropdown" id="sidebar-dropdown">
+                <a href="#" class="sidebar-nav-item sidebar-dropdown-toggle">
+                    <span class="sidebar-icon">📋</span>
+                    <span>Carga Procesal</span>
+                    <span class="dropdown-arrow">▼</span>
+                </a>
+                <div class="sidebar-dropdown-content">
+                    <a href="carga.html" class="sidebar-dropdown-item">
+                        <span class="sidebar-icon">📊</span>
+                        <span>Carga Supraprovincial</span>
+                    </a>
+                    <a href="cargaprov.html" class="sidebar-dropdown-item">
+                        <span class="sidebar-icon">🏛️</span>
+                        <span>Carga Provincial</span>
+                    </a>
+                    <a href="cargapool.html" class="sidebar-dropdown-item">
+                        <span class="sidebar-icon">👥</span>
+                        <span>Carga del Pool</span>
+                    </a>
+                </div>
+            </div>
+            
+            <a href="plazos.html" class="sidebar-nav-item">
+                <span class="sidebar-icon">⏱️</span>
+                <span>Plazos</span>
+            </a>
+            <a href="operativos.html" class="sidebar-nav-item">
+                <span class="sidebar-icon">🚁</span>
+                <span>Operativos</span>
+            </a>
+            <a href="sentencias.html" class="sidebar-nav-item">
+                <span class="sidebar-icon">⚖️</span>
+                <span>Sentencias</span>
+            </a>
+        </div>
+    </nav>
 
     <!-- Sección de Bienvenida -->
     <section class="welcome-section">
@@ -67,10 +144,64 @@
         </div>
     </section>
 
-<section class="welcome-section">
-    <iframe title="POWER BI - FECOR_FECOR 2025_JUN17" width="1300" height="800" src="https://app.powerbi.com/view?r=eyJrIjoiOWEwNDdkMGItZmQ5Zi00MWUyLTgzNGItNzM1Y2IxNzI1OGIwIiwidCI6IjIzMTU1N2JkLTA5ZGUtNGFiNy1iNDhmLWYzZWRkMTE5ZGViZSIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
- </section>
+    <section class="powerbi-section">
+        <div class="powerbi-container">
+            <iframe 
+                title="POWER BI - FECOR_FECOR 2025_plazos" 
+                width="100%" 
+                height="800" 
+                src="https://app.powerbi.com/view?r=eyJrIjoiOWEwNDdkMGItZmQ5Zi00MWUyLTgzNGItNzM1Y2IxNzI1OGIwIiwidCI6IjIzMTU1N2JkLTA5ZGUtNGFiNy1iNDhmLWYzZWRkMTE5ZGViZSIsImMiOjEwfQ%3D%3D"
+                frameborder="0" 
+                allowFullScreen="true">
+            </iframe>
+        </div>
+    </section>
 
-  <script src="script.js"></script>
+
+
+ <script src="menumovil.js"></script>
+ <script src="script.js"></script>
+
+    <!-- CSS adicional para PowerBI responsivo -->
+    <style>
+        .powerbi-section {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .powerbi-container {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .powerbi-container iframe {
+            border-radius: 15px;
+            min-height: 600px;
+        }
+        
+        @media (max-width: 768px) {
+            .powerbi-container {
+                padding: 10px;
+            }
+            
+            .powerbi-container iframe {
+                height: 500px;
+            }
+        }
+    </style>
+
+
+<footer>
+    <section class="panels-grid">
+    <div class="content">  
+    <p>Copyright © 2025 INFORMÁTICA - PANELES INTERACTIVOS</p>         
+    </div>
+    </section>
+</footer> 
 </body>
 </html>
