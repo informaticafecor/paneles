@@ -36,7 +36,7 @@ class UnifiedFecorLoader {
             styles: 'styles.css',
 
             scripts: 'script.js',
-            menumovil: 'menumovil.js',
+            scripts: 'menumovil.js',
             // Archivos de imagen/recursos (si los necesitas)
             images: [
                 'cal.png',
@@ -385,6 +385,7 @@ class UnifiedFecorLoader {
                             ${Object.values(this.files.html).map(file => `<li>📄 ${file}</li>`).join('')}
                             <li>🎨 ${this.files.styles}</li>
                             <li>⚙️ ${this.files.scripts}</li>
+                            <li>⚙️ ${this.files.menumovil}</li>
                         </ul>
                     </div>
                     <button onclick="fecorSystem.init()" class="retry-button">
